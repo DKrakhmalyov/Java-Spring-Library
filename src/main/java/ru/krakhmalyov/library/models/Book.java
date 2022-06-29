@@ -10,7 +10,7 @@ public class Book {
     @Size(min = 2, max = 200, message = "Name should be between 2 and 30 characters")
     private String name;
 
-    private String autor;
+    private String author;
 
     @Max(value = 2022, message = "Year of birth should be less that 2022")
     private int year;
@@ -31,12 +31,12 @@ public class Book {
         this.name = name;
     }
 
-    public String getAutor() {
-        return autor;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setAutor(String autor) {
-        this.autor = autor;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public int getYear() {
