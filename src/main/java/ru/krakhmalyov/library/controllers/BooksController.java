@@ -6,7 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.krakhmalyov.library.dao.BookDAO;
+import ru.krakhmalyov.library.dao.PersonDAO;
 import ru.krakhmalyov.library.models.Book;
+import ru.krakhmalyov.library.models.Person;
 
 import javax.validation.Valid;
 import java.sql.SQLException;
@@ -15,10 +17,12 @@ import java.sql.SQLException;
 @RequestMapping("/books")
 public class BooksController {
     private final BookDAO bookDAO;
+    private final PersonDAO personDAO;
 
     @Autowired
-    public BooksController(BookDAO bookDAO){
+    public BooksController(BookDAO bookDAO, PersonDAO personDAO){
         this.bookDAO = bookDAO;
+        this.personDAO = personDAO;
     }
 
     @GetMapping()
@@ -32,6 +36,8 @@ public class BooksController {
         model.addAttribute("book", bookDAO.show(id));
         System.out.println("Do we have owner:" + bookDAO.getOwner(id).isPresent() + " " + bookDAO.getOwner(id).isEmpty());
         model.addAttribute("owner", bookDAO.getOwner(id));
+        model.addAttribute("people", personDAO.index());
+
         return "books/show";
     }
 
@@ -64,6 +70,13 @@ public class BooksController {
 
         bookDAO.update(id, book);
         return "redirect:/books";
+    }
+
+    @PatchMapping("/{id}/set")
+    public String set(@ModelAttribute("book") Book book) {
+        System.out.println("I am here to set ownership " + book.getId() + " " + book.getPerson_id());
+        bookDAO.setOwner(book.getPerson_id().get(), book.getId());
+        return "redirect:/books/{id}";
     }
 
     @PatchMapping("/{id}/vacate")

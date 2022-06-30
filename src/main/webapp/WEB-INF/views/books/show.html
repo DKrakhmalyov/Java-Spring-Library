@@ -12,6 +12,15 @@
    th:text="${'This book is free '}">
 </p>
 
+<form th:if="${owner.isEmpty()}" th:method="PATCH" th:action="@{/books/{id}/set(id=${book.getId()})}">
+  <label for="new_owner">Choose new owner</label>
+  <select th:object="${book}" th:field="*{person_id}" id="new_owner">
+    <option th:each="person : ${people}" th:value="${person.getId()}"
+            th:text="${person.getName()}"></option>
+  </select>
+  <input type="submit" value="Set ownership to book"/>
+</form>
+
 <p th:unless="${owner.isEmpty()}"
   th:text="${'Owner is: ' + owner.get().getName()}">
 </p>
@@ -19,9 +28,6 @@
 <form th:unless="${owner.isEmpty()}" th:method="PATCH" th:action="@{/books/{id}/vacate(id=${book.getId()})}" th:object="${book}">
   <input type="submit" value="Vacate book"/>
 </form>
-
-
-<p th:text="${book.getId()}">VALUE</p>
 
 <a th:href="@{/books/{id}/edit(id=${book.getId()})}">Edit</a>
 

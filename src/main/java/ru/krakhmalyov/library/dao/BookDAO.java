@@ -53,7 +53,7 @@ public class BookDAO {
     }
     public Optional<Person> getOwner(int book_id){
         Optional<Book> p_id = jdbcTemplate.query("SELECT * FROM Books WHERE id=?", new Object[]{book_id}, new BeanPropertyRowMapper<>(Book.class)).stream().findAny();
-            System.out.println(p_id.get().getName() + p_id.get().getPerson_id());
+            System.out.println(p_id.get().getName() + " " + p_id.get().getPerson_id());
         if (p_id.get().getPerson_id().isPresent())
             return jdbcTemplate.query("SELECT * FROM Person WHERE id=?", new Object[]{p_id.get().getPerson_id().get()}, new BeanPropertyRowMapper<>(Person.class)).stream().findAny();
         else

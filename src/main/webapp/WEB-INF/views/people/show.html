@@ -6,9 +6,9 @@
 </head>
 <body>
 <p th:text="${person.getName() + ', ' + person.getBirthyear()}">VALUE</p>
-<p th:text="${person.getId()}">VALUE</p>
 
-<p th:text="'Which books owns:'" />
+<p th:if="${own_books.isEmpty()}" th:text="'Owns no books'" />
+<p th:unless="${own_books.isEmpty()}" th:text="'Which books owns:'" />
 
 <div th:each="book : ${own_books}">
   <a th:href="@{/books/{id}(id=${book.getId()})}"
