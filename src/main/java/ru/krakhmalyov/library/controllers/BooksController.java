@@ -30,6 +30,8 @@ public class BooksController {
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model){
         model.addAttribute("book", bookDAO.show(id));
+        System.out.println("Do we have owner:" + bookDAO.getOwner(id).isPresent() + " " + bookDAO.getOwner(id).isEmpty());
+        model.addAttribute("owner", bookDAO.getOwner(id));
         return "books/show";
     }
 

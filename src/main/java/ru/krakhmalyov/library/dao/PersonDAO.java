@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import ru.krakhmalyov.library.models.Book;
 import ru.krakhmalyov.library.models.Person;
 
 import java.sql.*;
@@ -29,6 +30,7 @@ public class PersonDAO {
     public Person show(int person_id) {
         System.out.println("Want to show id " + person_id);
         return jdbcTemplate.query("SELECT * FROM person WHERE id=?", new Object[]{person_id}, new BeanPropertyRowMapper<>(Person.class)).stream().findAny().orElse(null);
+
     }
 
     public Optional<Person> show(String name){
@@ -45,5 +47,9 @@ public class PersonDAO {
 
     public void delete(int person_id) {
         jdbcTemplate.update("DELETE FROM Person WHERE id=?", person_id);
+    }
+
+    public List<Book> showBooks(int person_id){
+        return jdbcTemplate.query("SELECT * FROM Books WHERE person_id=?", new Object[]{person_id}, new BeanPropertyRowMapper<>(Book.class)).stream().toList();
     }
 }

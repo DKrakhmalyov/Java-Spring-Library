@@ -1,12 +1,23 @@
 package ru.krakhmalyov.library.models;
 
 import javax.validation.constraints.*;
+import java.util.Optional;
 
 public class Book {
 
     private int id;
 
+    public Optional<Integer> getPerson_id() {
+        return person_id;
+    }
+
+    public void setPerson_id(Optional<Integer> person_id) {
+        this.person_id = person_id;
+    }
+
+    private Optional<Integer> person_id;
     @NotEmpty(message = "Name should not be empty")
+
     @Size(min = 2, max = 200, message = "Name should be between 2 and 30 characters")
     private String name;
 

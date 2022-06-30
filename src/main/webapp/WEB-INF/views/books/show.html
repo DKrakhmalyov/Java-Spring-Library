@@ -7,6 +7,17 @@
 <body>
 <p th:text="${book.getName() + ', ' + book.getAuthor()+ ', ' + book.getYear()}">VALUE</p>
 
+
+<p th:if="${owner.isEmpty()}"
+   th:text="${'This book is free '}">
+</p>
+
+<p th:unless="${owner.isEmpty()}"
+  th:text="${'Owner is: ' + owner.get().getName()}">
+</p>
+
+
+
 <p th:text="${book.getId()}">VALUE</p>
 
 <a th:href="@{/books/{id}/edit(id=${book.getId()})}">Edit</a>

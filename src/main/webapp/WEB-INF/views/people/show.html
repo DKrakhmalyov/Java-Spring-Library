@@ -8,6 +8,13 @@
 <p th:text="${person.getName() + ', ' + person.getBirthyear()}">VALUE</p>
 <p th:text="${person.getId()}">VALUE</p>
 
+<p th:text="'Which books owns:'" />
+
+<div th:each="book : ${own_books}">
+  <a th:href="@{/books/{id}(id=${book.getId()})}"
+     th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}">owned_book</a>
+</div>
+
 <a th:href="@{/people/{id}/edit(id=${person.getId()})}">Edit</a>
 
 <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
