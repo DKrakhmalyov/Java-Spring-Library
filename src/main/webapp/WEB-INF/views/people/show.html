@@ -2,23 +2,23 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Show</title>
+  <title>Человека</title>
 </head>
 <body>
 <p th:text="${person.getName() + ', ' + person.getBirthyear()}">VALUE</p>
 
-<p th:if="${own_books.isEmpty()}" th:text="'Owns no books'" />
-<p th:unless="${own_books.isEmpty()}" th:text="'Which books owns:'" />
+<p th:if="${own_books.isEmpty()}" th:text="'Пока не владеет книгами'" />
+<p th:unless="${own_books.isEmpty()}" th:text="'Книги:'" />
 
 <div th:each="book : ${own_books}">
   <a th:href="@{/books/{id}(id=${book.getId()})}"
      th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}">owned_book</a>
 </div>
 
-<a th:href="@{/people/{id}/edit(id=${person.getId()})}">Edit</a>
+<a th:href="@{/people/{id}/edit(id=${person.getId()})}">Редактировать</a>
 
 <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
-  <input type="submit" value="Delete"/>
+  <input type="submit" value="Удалить"/>
 </form>
 </body>
 </html>

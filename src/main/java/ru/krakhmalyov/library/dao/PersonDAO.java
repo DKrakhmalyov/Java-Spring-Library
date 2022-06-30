@@ -28,7 +28,6 @@ public class PersonDAO {
     }
 
     public Person show(int person_id) {
-        System.out.println("Want to show id " + person_id);
         return jdbcTemplate.query("SELECT * FROM person WHERE id=?", new Object[]{person_id}, new BeanPropertyRowMapper<>(Person.class)).stream().findAny().orElse(null);
 
     }

@@ -34,7 +34,6 @@ public class BooksController {
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model){
         model.addAttribute("book", bookDAO.show(id));
-        System.out.println("Do we have owner:" + bookDAO.getOwner(id).isPresent() + " " + bookDAO.getOwner(id).isEmpty());
         model.addAttribute("owner", bookDAO.getOwner(id));
         model.addAttribute("people", personDAO.index());
 
@@ -74,7 +73,6 @@ public class BooksController {
 
     @PatchMapping("/{id}/set")
     public String set(@ModelAttribute("book") Book book) {
-        System.out.println("I am here to set ownership " + book.getId() + " " + book.getPerson_id());
         bookDAO.setOwner(book.getPerson_id().get(), book.getId());
         return "redirect:/books/{id}";
     }
@@ -82,7 +80,6 @@ public class BooksController {
     @PatchMapping("/{id}/vacate")
     public String vacate(Model model,
                          @PathVariable("id") int id) {
-        System.out.println("I am here to vacate " + id);
         bookDAO.vacate(id);
         return "redirect:/books/{id}";
     }
