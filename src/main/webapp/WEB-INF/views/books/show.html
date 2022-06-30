@@ -16,6 +16,9 @@
   th:text="${'Owner is: ' + owner.get().getName()}">
 </p>
 
+<form th:unless="${owner.isEmpty()}" th:method="PATCH" th:action="@{/books/{id}/vacate(id=${book.getId()})}" th:object="${book}">
+  <input type="submit" value="Vacate book"/>
+</form>
 
 
 <p th:text="${book.getId()}">VALUE</p>

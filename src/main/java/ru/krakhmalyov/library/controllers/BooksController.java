@@ -57,13 +57,21 @@ public class BooksController {
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("person") @Valid Book book, BindingResult bindingResult,
+    public String update(@ModelAttribute("book") @Valid Book book, BindingResult bindingResult,
                          @PathVariable("id") int id) {
         if (bindingResult.hasErrors())
             return "books/edit";
 
         bookDAO.update(id, book);
         return "redirect:/books";
+    }
+
+    @PatchMapping("/{id}/vacate")
+    public String vacate(Model model,
+                         @PathVariable("id") int id) {
+        System.out.println("I am here to vacate " + id);
+        bookDAO.vacate(id);
+        return "redirect:/books/{id}";
     }
 
     @DeleteMapping("/{id}")
