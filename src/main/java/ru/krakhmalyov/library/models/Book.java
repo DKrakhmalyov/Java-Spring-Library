@@ -1,29 +1,44 @@
 package ru.krakhmalyov.library.models;
 
+import javax.persistence.*;
+
 import javax.validation.constraints.*;
 import java.util.Optional;
 
+@Entity
+@Table(name = "books")
 public class Book {
 
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    public Optional<Integer> getPerson_id() {
-        return person_id;
+
+    @ManyToOne
+    @JoinColumn(name = "person_id", referencedColumnName = "id")
+    private Person owner;
+
+    public Person getOwner() {
+        return owner;
     }
 
-    public void setPerson_id(Optional<Integer> person_id) {
-        this.person_id = person_id;
+    public void setOwner(Person person) {
+        this.owner = person;
     }
 
-    private Optional<Integer> person_id;
+    public Book(){};
     @NotEmpty(message = "Name should not be empty")
-
     @Size(min = 2, max = 200, message = "Name should be between 2 and 30 characters")
+    @Column(name = "name")
     private String name;
 
+    @NotEmpty
+    @Column(name = "author")
     private String author;
 
     @Max(value = 2022, message = "Year of birth should be less that 2022")
+    @Column(name = "year")
     private int year;
 
     public int getId() {
@@ -58,4 +73,14 @@ public class Book {
         this.year = year;
     }
 
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", owner=" + owner +
+                ", name='" + name + '\'' +
+                ", author='" + author + '\'' +
+                ", year=" + year +
+                '}';
+    }
 }

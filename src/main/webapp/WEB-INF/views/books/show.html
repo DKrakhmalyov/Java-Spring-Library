@@ -14,7 +14,7 @@
 
 <form th:if="${owner.isEmpty()}" th:method="PATCH" th:action="@{/books/{id}/set(id=${book.getId()})}">
   <label for="new_owner">Кому её назначить</label>
-  <select th:object="${book}" th:field="*{person_id}" id="new_owner">
+  <select th:object="${person}" th:field="*{id}" id="new_owner">
     <option th:each="person : ${people}" th:value="${person.getId()}"
             th:text="${person.getName()}"></option>
   </select>
