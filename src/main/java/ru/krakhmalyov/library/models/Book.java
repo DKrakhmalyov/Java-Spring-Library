@@ -3,7 +3,9 @@ package ru.krakhmalyov.library.models;
 import javax.persistence.*;
 
 import javax.validation.constraints.*;
+import java.util.Date;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 @Entity
 @Table(name = "books")
@@ -82,5 +84,24 @@ public class Book {
                 ", author='" + author + '\'' +
                 ", year=" + year +
                 '}';
+    }
+
+    @Column(name = "edited_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date editedAt;
+
+    public Date getEditedAt() {
+        return editedAt;
+    }
+
+    public void setEditedAt(Date editedAt) {
+        this.editedAt = editedAt;
+    }
+
+    public boolean isOutDated(){
+        long out = TimeUnit
+                .MILLISECONDS
+                .toSeconds(new Date().getTime() - getEditedAt().getTime());
+        return out > 20;
     }
 }
